@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.back.LuckBagMapper">
+  <resultMap id="BaseResultMap" type="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="bag_index" jdbcType="INTEGER" property="bagIndex" />
+    <result column="bag_number" jdbcType="INTEGER" property="bagNumber" />
+    <result column="total_number" jdbcType="INTEGER" property="totalNumber" />
+    <result column="inserttime" jdbcType="TIMESTAMP" property="inserttime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="isactive" jdbcType="BIT" property="isactive" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, activity_id, user_id, bag_index, bag_number, total_number, inserttime, updatetime, isactive
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vipday_activity_luck_bag_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from vipday_activity_luck_bag_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into vipday_activity_luck_bag_detail (activity_id, user_id, bag_index, 
+      bag_number,total_number)
+    values (#{activityId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{bagIndex,jdbcType=INTEGER}, 
+      #{bagNumber,jdbcType=INTEGER},#{totalNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into vipday_activity_luck_bag_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activityId != null">
+        activity_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="bagIndex != null">
+        bag_index,
+      </if>
+      <if test="bagNumber != null">
+        bag_number,
+      </if>
+      <if test="totalNumber != null">
+        total_number,
+      </if>
+      <if test="inserttime != null">
+        inserttime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="isactive != null">
+        isactive,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activityId != null">
+        #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="bagIndex != null">
+        #{bagIndex,jdbcType=INTEGER},
+      </if>
+      <if test="bagNumber != null">
+        #{bagNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalNumber != null">
+        #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="inserttime != null">
+        #{inserttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isactive != null">
+        #{isactive,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+    update vipday_activity_luck_bag_detail
+    <set>
+      <if test="activityId != null">
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="bagIndex != null">
+        bag_index = #{bagIndex,jdbcType=INTEGER},
+      </if>
+      <if test="bagNumber != null">
+        bag_number = #{bagNumber,jdbcType=INTEGER},
+      </if>
+      <if test="totalNumber != null">
+        total_number = #{totalNumber,jdbcType=INTEGER},
+      </if>
+      <if test="inserttime != null">
+        inserttime = #{inserttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isactive != null">
+        isactive = #{isactive,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+    update vipday_activity_luck_bag_detail
+    set activity_id = #{activityId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      bag_index = #{bagIndex,jdbcType=INTEGER},
+      bag_number = #{bagNumber,jdbcType=INTEGER},
+      total_number = #{totalNumber,jdbcType=INTEGER},
+      inserttime = #{inserttime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      isactive = #{isactive,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="countUserTotalUsedBagTimes" resultType="int">
+    SELECT
+	  COALESCE (sum(bag_number), 0)
+    FROM
+      vipday_activity_luck_bag_detail
+    WHERE
+      isactive = 1
+    AND user_id = #{userId}
+    AND activity_id = #{activityId}
+  </select>
+  <select id="countUserLuckBagNumber" resultType="java.lang.Integer">
+      SELECT
+        COALESCE (sum(bag_number), 0)
+      FROM
+        vipday_activity_luck_bag_detail
+      WHERE
+        isactive = 1
+      AND user_id = #{userId}
+      AND activity_id = #{activityId}
+      AND bag_index = #{bagIndex}
+  </select>
+  <select id="countLuckBagTotalNumber" resultType="java.lang.Integer">
+      SELECT
+        COALESCE (sum(bag_number), 0)
+      FROM
+        vipday_activity_luck_bag_detail
+      WHERE
+        isactive = 1
+      AND activity_id = #{activityId}
+      AND bag_index = #{bagIndex}
+  </select>
+
+  <select id="pageSelect" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from vipday_activity_luck_bag_detail
+    where isactive = 1 and activity_id = #{activityId} and bag_index = #{bagIndex} and id > #{minId}
+    order by id asc
+  </select>
+  <select id="countEveryBagTotalNumber" resultMap="BaseResultMap">
+
+    select bag_index, COALESCE (sum(bag_number), 0) as total_number
+     FROM
+        vipday_activity_luck_bag_detail
+      WHERE
+        isactive = 1
+      AND activity_id = #{activityId}
+      GROUP BY bag_index
+
+  </select>
+  <select id="countUserEveryBagTotalNumber" resultMap="BaseResultMap">
+    select bag_index, COALESCE (sum(bag_number), 0) as total_number
+     FROM
+        vipday_activity_luck_bag_detail
+      WHERE
+        isactive = 1
+      AND activity_id = #{activityId}
+      AND user_id = #{userId}
+      GROUP BY bag_index
+  </select>
+  <update id="updateTotalBagNumber">
+      update  vipday_activity_luck_bag_detail
+      set total_number = #{totalNumber}
+      where isactive = 1
+       AND activity_id = #{activityId}
+      AND user_id = #{userId}
+      AND bag_index = #{bagIndex}
+  </update>
+</mapper>
