@@ -1,9 +1,6 @@
-package com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.back;
+package com.github.wangfeng.springboot.mybatis.multiple.datasource.mapper.back;
 
-import static org.junit.Assert.*;
-
-import com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO;
-import com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.primary.LuckBagMapper1;
+import com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

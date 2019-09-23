@@ -1,4 +1,4 @@
-package com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity;
+package com.github.wangfeng.springboot.mybatis.multiple.datasource.entity;
 
 import java.util.Date;
 import lombok.AllArgsConstructor;

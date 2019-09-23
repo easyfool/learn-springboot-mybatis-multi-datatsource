@@ -1,4 +1,4 @@
-package com.wangfengbabe.learn.springboot.mybatis.multi.datasource;
+package com.github.wangfeng.springboot.mybatis.multiple.datasource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

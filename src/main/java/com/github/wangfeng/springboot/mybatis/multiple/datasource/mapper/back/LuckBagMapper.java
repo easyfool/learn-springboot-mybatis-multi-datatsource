@@ -1,13 +1,12 @@
-package com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.primary;
+package com.github.wangfeng.springboot.mybatis.multiple.datasource.mapper.back;
 
-import com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO;
+import com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 @Mapper
-public interface LuckBagMapper1 {
+public interface LuckBagMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(LuckBagDO record);

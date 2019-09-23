@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.back.LuckBagMapper">
-  <resultMap id="BaseResultMap" type="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+<mapper namespace="com.github.wangfeng.springboot.mybatis.multiple.datasource.mapper.back.LuckBagMapper">
+  <resultMap id="BaseResultMap" type="com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
@@ -25,7 +25,7 @@
     delete from vipday_activity_luck_bag_detail
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+  <insert id="insert" parameterType="com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -34,7 +34,7 @@
     values (#{activityId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{bagIndex,jdbcType=INTEGER}, 
       #{bagNumber,jdbcType=INTEGER},#{totalNumber,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+  <insert id="insertSelective" parameterType="com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -92,7 +92,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO">
     update vipday_activity_luck_bag_detail
     <set>
       <if test="activityId != null">
@@ -122,7 +122,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.wangfengbabe.learn.springboot.mybatis.multi.datasource.entity.LuckBagDO">
+  <update id="updateByPrimaryKey" parameterType="com.github.wangfeng.springboot.mybatis.multiple.datasource.entity.LuckBagDO">
     update vipday_activity_luck_bag_detail
     set activity_id = #{activityId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=BIGINT},

@@ -1,10 +1,10 @@
-package com.wangfengbabe.learn.springboot.mybatis.multi.datasource.config;
+package com.github.wangfeng.springboot.mybatis.multiple.datasource.config;
 
 /**
- * @ClassName PrimaryDataBaseConfig
+ * @ClassName BackDataBaseConfig
  * @Description TODO
  * @Author wangfeng04
- * @Date 2018/12/14 17:30
+ * @Date 2018/12/14 17:31
  * @Version 1.0
  **/
 
@@ -17,29 +17,28 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+
 @Data
 @Configuration
-// 前缀为primary.datasource.druid的配置信息
-@ConfigurationProperties(prefix = "primary.datasource.druid")
-@MapperScan(basePackages = PrimaryDataBaseConfig.PACKAGE, sqlSessionFactoryRef = "primarySqlSessionFactory")
-public class PrimaryDataBaseConfig {
+@ConfigurationProperties(prefix = "back.datasource.druid")
+@MapperScan(basePackages = BackDataBaseConfig.PACKAGE, sqlSessionFactoryRef = "backSqlSessionFactory")
+public class BackDataBaseConfig {
 
     /**
      * dao层的包路径
      */
-    static final String PACKAGE = "com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.primary";
+    static final String PACKAGE = "com.wangfengbabe.learn.springboot.mybatis.multi.datasource.mapper.back";
 
     /**
      * mapper文件的相对路径
      */
-    private static final String MAPPER_LOCATION = "classpath:mapper/primary/*.xml";
+    private static final String MAPPER_LOCATION = "classpath:mapper/back/*.xml";
 
     private String filters;
     private String url;
@@ -59,10 +58,8 @@ public class PrimaryDataBaseConfig {
     private boolean poolPreparedStatements;
     private int maxPoolPreparedStatementPerConnectionSize;
 
-    // 主数据源使用@Primary注解进行标识
-    @Primary
-    @Bean(name = "primaryDataSource")
-    public DataSource primaryDataSource() throws SQLException {
+    @Bean(name = "backDataSource")
+    public DataSource backDataSource() throws SQLException {
         DruidDataSource druid = new DruidDataSource();
         // 监控统计拦截的filters
         druid.setFilters(filters);
@@ -101,22 +98,18 @@ public class PrimaryDataBaseConfig {
         return druid;
     }
 
-    // 创建该数据源的事务管理
-    @Primary
-    @Bean(name = "primaryTransactionManager")
-    public DataSourceTransactionManager primaryTransactionManager() throws SQLException {
-        return new DataSourceTransactionManager(primaryDataSource());
+    @Bean(name = "backTransactionManager")
+    public DataSourceTransactionManager backTransactionManager() throws SQLException {
+        return new DataSourceTransactionManager(backDataSource());
     }
 
-    // 创建Mybatis的连接会话工厂实例
-    @Primary
-    @Bean(name = "primarySqlSessionFactory")
-    public SqlSessionFactory primarySqlSessionFactory(
-            @Qualifier("primaryDataSource") DataSource primaryDataSource) throws Exception {
+    @Bean(name = "backSqlSessionFactory")
+    public SqlSessionFactory backSqlSessionFactory(
+            @Qualifier("backDataSource") DataSource backDataSource) throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(primaryDataSource);  // 设置数据源bean
+        sessionFactory.setDataSource(backDataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-                .getResources(PrimaryDataBaseConfig.MAPPER_LOCATION));  // 设置mapper文件路径
+                .getResources(BackDataBaseConfig.MAPPER_LOCATION));
 
         return sessionFactory.getObject();
     }
