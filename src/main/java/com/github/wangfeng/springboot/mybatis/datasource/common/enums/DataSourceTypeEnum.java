@@ -1,4 +1,4 @@
-package com.github.wangfeng.springboot.mybatis.multiple.datasource.common.enums;
+package com.github.wangfeng.springboot.mybatis.datasource.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

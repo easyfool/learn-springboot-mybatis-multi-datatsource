@@ -1,4 +1,4 @@
-package com.github.wangfeng.springboot.mybatis.multiple.datasource;
+package com.github.wangfeng.springboot.mybatis.datasource;
 
 import java.sql.Connection;
 import java.sql.SQLException;

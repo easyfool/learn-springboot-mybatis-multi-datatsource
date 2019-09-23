@@ -14,3 +14,7 @@ spring:
         url: jdbc:mysql://localhost:3306/db1?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
         username: root
         password: root
+
+mybatis:
+    mapper-locations: classpath:mapper/*.xml
+#    config-location:
