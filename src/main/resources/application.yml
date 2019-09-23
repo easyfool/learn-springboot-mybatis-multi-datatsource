@@ -1,20 +1,67 @@
 spring:
-    datasource:
-        driverClassName: com.mysql.cj.jdbc.Driver
-        hikari:
-            auto-commit: true
-            connection-test-query: SELECT 1
-            connection-timeout: 30000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 10
-            minimum-idle: 5
-            pool-name: MyHikariCP
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/db1?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
-        username: root
-        password: root
+  datasource:
+    db1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3306/db1?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
+      username: root
+      password: root
+      type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 180000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      pool-name: MyHikariCP
+
+
+    db2:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:3306/db2?useSSL=false&characterEncoding=utf-8&serverTimezone=UTC
+      username: root
+      password: root
+      type: com.zaxxer.hikari.HikariDataSource
+      hikari:
+        auto-commit: true
+        connection-test-query: SELECT 1
+        connection-timeout: 30000
+        idle-timeout: 180000
+        max-lifetime: 1800000
+        maximum-pool-size: 10
+        minimum-idle: 5
+        pool-name: MyHikariCP
+
+
 
 mybatis:
-    mapper-locations: classpath:mapper/*.xml
-#    config-location:
+  #  mapper-locations: classpath:mapper/*.xml
+  #    config-location:
+  db1:
+    # 映射文件的路径 ， 这个切换数据源的场景下不能配置 * 通配符，有多个 逗号隔开，继续跟 classpath:mapper_db1/XXX
+    # 在MybatisConfig.java#sqlSessionFactoryBean方法中通过sqlSessionFactoryBean设置classpath:mapper_db1/*.xml ,不然每次都要改这个地方，不好维护。
+    #  mapper-locations: classpath:mapper_db1/*.xml
+
+    # 类型别名包配置，只能指定具体的包，多个配置可以使用英文逗号隔开
+    # 也可以通过sqlSessionFactoryBean.setTypeAliasesPackage("com.artisan.domain.db1")
+    type-aliases-package: com.github.wangfeng.springboot.mybatis.datasource.entity.db2
+
+
+    # Mybatis SQL语句控制台打印
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+    db2:
+      # 映射文件的路径 ， 这个切换数据源的场景下不能配置 * 通配符，有多个 逗号隔开，继续跟 classpath:mapper_db1/XXX
+      # 在MybatisConfig.java#sqlSessionFactoryBean方法中通过sqlSessionFactoryBean设置classpath:mapper_db1/*.xml ,不然每次都要改这个地方，不好维护。
+      #  mapper-locations: classpath:mapper_db1/*.xml
+
+      # 类型别名包配置，只能指定具体的包，多个配置可以使用英文逗号隔开
+      # 也可以通过sqlSessionFactoryBean.setTypeAliasesPackage("com.artisan.domain.db2")
+      type-aliases-package: com.github.wangfeng.springboot.mybatis.datasource.entity.db2
+
+
+      # Mybatis SQL语句控制台打印
+      configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
