@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LearnSpringbootMybatisMultiDatasourceApplication {
+public class SpringbootMybatisDatasourceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LearnSpringbootMybatisMultiDatasourceApplication.class, args);
+        SpringApplication.run(SpringbootMybatisDatasourceApplication.class, args);
     }
 
 }
