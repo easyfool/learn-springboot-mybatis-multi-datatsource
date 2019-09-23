@@ -2,6 +2,7 @@ package com.github.wangfeng.springboot.mybatis.datasource.config.dataSource;
 
 import javax.sql.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,6 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 @Configuration
 //  db1的接口类的包名
@@ -45,5 +48,23 @@ public class MybatisDb2Config {
     //    SqlSessionTemplate template = new SqlSessionTemplate(db2SqlSessionFactoryBean().getObject());
     //    return template;
     //}
+
+    // 支持JdbcTemplate （可选）
+    @Bean("db2JdbcTemplate")
+    public JdbcTemplate db2JdbcTemplate(
+            @Qualifier("db2") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+    @Bean("db2TransactionManager")
+    public DataSourceTransactionManager db2TransactionManager(
+            @Qualifier("db2") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean(name = "db2SqlSessionTemplate")
+    public SqlSessionTemplate testSqlSessionTemplate(
+            @Qualifier("db2SqlSessionFactoryBean") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactoryBean.getObject());
+    }
 
 }
